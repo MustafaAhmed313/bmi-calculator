@@ -1,6 +1,7 @@
 class AppFontSizes {
   static const double num20 = 20; //semi bold, Regular, bold
   static const double num50 = 50; //bold
+  static const double num40 = 40; //bold
   static const double num10 = 10; //bold
   static const double num32 = 32; //semi bold
   static const double num64 = 64; //bold

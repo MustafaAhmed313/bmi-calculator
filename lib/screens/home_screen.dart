@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   activeColor: AppColors.red,
                                   min: 30,
                                   max: 220,
-                                  value: 150,
+                                  value: selectedHeight,
                                   onChanged: (value) {
                                     setState(() {
                                       selectedHeight = value;

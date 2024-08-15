@@ -2,11 +2,10 @@ import 'package:bmi_calculator/constants/app_colors.dart';
 import 'package:bmi_calculator/constants/app_font_sizes.dart';
 import 'package:bmi_calculator/constants/app_font_weights.dart';
 import 'package:bmi_calculator/constants/gender_enum.dart';
+import 'package:bmi_calculator/models/bmi_model.dart';
+import 'package:bmi_calculator/screens/result_screen.dart';
 import 'package:bmi_calculator/widgets/app_bar.dart';
 import 'package:bmi_calculator/widgets/gender_box.dart';
-import 'package:bmi_calculator/widgets/height_box.dart';
-import 'package:bmi_calculator/widgets/physical_box.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -27,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        appBar: myAppBar(),
         body: Container(
           width: double.infinity,
           decoration: const BoxDecoration(
@@ -221,34 +221,24 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: GestureDetector(
                     onTap: () {
                       double bmi = selectedWeight / ((selectedHeight / 100) * 2);
-                      String message;
+                      String message, label;
                       if (bmi < 18.5) {
-                        message = 'Underweight';
+                        label = 'Underweight';
+                        message = 'Consider reviewing your diet and consult a healthcare professional if needed.';
                       } else if (bmi >= 18.5 && bmi < 24.9) {
-                        message = 'Normal';
+                        label = 'Normal';
+                        message = 'Keep up the healthy lifestyle!';
                       } else if (bmi >= 25 && bmi < 29.9) {
-                        message = 'Overweight';
+                        label = 'Overweight';
+                        message = 'Incorporating exercise and a balanced diet can help.';
                       } else {
-                        message = 'Obese';
+                        label = 'Obese';
+                        message = 'Consider seeking advice to improve your health.';
                       }
 
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              backgroundColor: AppColors.primary,
-                              title: Text(message, style: const TextStyle(color: AppColors.green)),
-                              content: Text("Your BMI is ${bmi.toInt()}", style: const TextStyle(color: AppColors.white),),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text("OK", style: TextStyle(color: AppColors.red)),
-                                )
-                              ],
-                            );
-                          });
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ResultScreen(bmiData: BmiModel(label, message, bmi))
+                      ));
                     },
                     child: Container(
                       width: double.infinity,
